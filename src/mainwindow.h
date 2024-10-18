@@ -1,6 +1,7 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+#include "scene.h"
 #include <QMainWindow>
 
 QT_BEGIN_NAMESPACE
@@ -21,5 +22,10 @@ private:
     Ui::MainWindow *ui;
 
     QString ipAddress;
+    Scene *initScene();
+    void updateLabel();
+    void sendText();
+    void sendImage();
+    QByteArray convertImageToRGB565(const QImage &image);
 };
 #endif // MAINWINDOW_H

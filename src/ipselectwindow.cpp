@@ -8,6 +8,11 @@ IPSelectWindow::IPSelectWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
+    setStyleSheet("background-color: #2A2A2A;");
+    ui->ConnectButton->setStyleSheet("QPushButton { color: white; background-color: #2A2A2A; }"
+                                     "QPushButton:hover { background-color: #4A4A4A; }"
+                                     "QPushButton:pressed { background-color: #3A3A3A; }");
+
     connect(ui->ConnectButton, &QPushButton::clicked, this, &IPSelectWindow::onConnectButtonClicked);
     connect(ui->IPLineEdit, &QLineEdit::returnPressed, ui->ConnectButton, &QPushButton::click);
 }

@@ -1,4 +1,4 @@
-QT       += core gui network
+QT       += core gui
 
 greaterThan(QT_MAJOR_VERSION, 5): QT += widgets
 
@@ -11,11 +11,14 @@ CONFIG += c++17
 SOURCES += \
     ipselectwindow.cpp \
     main.cpp \
-    mainwindow.cpp
+    mainwindow.cpp \
+    scene.cpp
 
 HEADERS += \
+    config.h \
     ipselectwindow.h \
-    mainwindow.h
+    mainwindow.h \
+    scene.h
 
 FORMS += \
     ipselectwindow.ui \
@@ -25,3 +28,6 @@ FORMS += \
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
+RESOURCES += \
+    resources.qrc
