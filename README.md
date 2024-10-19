@@ -1,1 +1,1 @@
-# PixelNetCanvas
+# PixelBluetoothCanvas

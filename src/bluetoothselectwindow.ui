@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>IPSelectWindow</class>
- <widget class="QWidget" name="IPSelectWindow">
+ <class>BluetoothSelectWindow</class>
+ <widget class="QWidget" name="BluetoothSelectWindow">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -43,16 +43,16 @@
       </spacer>
      </item>
      <item>
-      <widget class="QLineEdit" name="IPLineEdit">
+      <widget class="QLineEdit" name="BluetoothLineEdit">
        <property name="minimumSize">
         <size>
-         <width>120</width>
+         <width>150</width>
          <height>0</height>
         </size>
        </property>
        <property name="maximumSize">
         <size>
-         <width>120</width>
+         <width>150</width>
          <height>16777215</height>
         </size>
        </property>
@@ -63,7 +63,7 @@
         <string/>
        </property>
        <property name="placeholderText">
-        <string>192.168.4.1</string>
+        <string>XX:XX:XX:XX:XX:XX</string>
        </property>
       </widget>
      </item>
@@ -71,18 +71,25 @@
       <widget class="QPushButton" name="ConnectButton">
        <property name="minimumSize">
         <size>
-         <width>120</width>
+         <width>150</width>
          <height>0</height>
         </size>
        </property>
        <property name="maximumSize">
         <size>
-         <width>120</width>
+         <width>150</width>
          <height>16777215</height>
         </size>
        </property>
        <property name="text">
-        <string>Connect to IP</string>
+        <string>Connect to device</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="ErrorLabel">
+       <property name="text">
+        <string/>
        </property>
       </widget>
      </item>

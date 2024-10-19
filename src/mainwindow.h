@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include "scene.h"
+#include "bluetoothdatasender.h"
 #include <QMainWindow>
 
 QT_BEGIN_NAMESPACE
@@ -15,17 +16,18 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    MainWindow(const QString &ipAddress, QWidget *parent = nullptr);
+    MainWindow(const QString &bluetoothAddress, QWidget *parent = nullptr);
     ~MainWindow();
 
 private:
     Ui::MainWindow *ui;
 
-    QString ipAddress;
+    QString bluetoothAddress;
     Scene *initScene();
     void updateLabel();
     void sendText();
     void sendImage();
     QByteArray convertImageToRGB565(const QImage &image);
+    BluetoothDataSender bluetoothSender;
 };
 #endif // MAINWINDOW_H

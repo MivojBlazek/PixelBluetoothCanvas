@@ -3,16 +3,19 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "scene.h"
+#include "bluetoothdatasender.h"
 #include <QIcon>
+#include <QBluetoothUuid>
+#include <QDebug>
 
-MainWindow::MainWindow(const QString &ipAddress, QWidget *parent)
+MainWindow::MainWindow(const QString &bluetoothAddress, QWidget *parent)
     : QMainWindow(parent),
     ui(new Ui::MainWindow),
-    ipAddress(ipAddress)
+    bluetoothAddress(bluetoothAddress)
 {
     ui->setupUi(this);
 
-    setWindowTitle("PixelNetCanvas");
+    setWindowTitle("PixelBluetoothCanvas");
     setStyleSheet("background-color: #2A2A2A;");
 
     Scene *scene = initScene();
@@ -35,6 +38,8 @@ MainWindow::MainWindow(const QString &ipAddress, QWidget *parent)
 
     connect(ui->SendTextButton, &QPushButton::clicked, this, &MainWindow::sendText);
     connect(ui->SendImageButton, &QPushButton::clicked, this, &MainWindow::sendImage);
+
+    bluetoothSender.connectToDevice(bluetoothAddress, QBluetoothUuid(QBluetoothUuid::ServiceClassUuid::SerialPort));
 }
 
 MainWindow::~MainWindow()
@@ -66,7 +71,7 @@ void MainWindow::sendText()
 {
     QString textToSend = ui->SendTextLineEdit->text();
     QByteArray textData = textToSend.toUtf8();
-    //TODO
+    bluetoothSender.sendData(textData);
 }
 
 void MainWindow::sendImage()
@@ -76,21 +81,20 @@ void MainWindow::sendImage()
     {
         QImage image = scene->getImage();
         QByteArray imageData = convertImageToRGB565(image);
-        //TODO
+        bluetoothSender.sendData(imageData);
     }
 }
 
 QByteArray MainWindow::convertImageToRGB565(const QImage &image)
 {
-    //TODO
     QByteArray byteArray;
-    for (int y = 0; y < image.height(); ++y)
+    for (int y = 0; y < image.height(); y++)
     {
-        for (int x = 0; x < image.width(); ++x)
+        for (int x = 0; x < image.width(); x++)
         {
             QColor color = image.pixelColor(x, y);
             quint16 rgb565Pixel = ((color.red() >> 3) << 11) | ((color.green() >> 2) << 5) | (color.blue() >> 3);
-            byteArray.append(reinterpret_cast<const char*>(&rgb565Pixel), 2);
+            byteArray.append(reinterpret_cast<const char *>(&rgb565Pixel), 2);
         }
     }
     return byteArray;

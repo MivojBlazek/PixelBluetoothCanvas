@@ -1,5 +1,5 @@
 # 
-# PixelNetCanvas
+# PixelBluetoothCanvas
 #
 # File: Makefile
 #
@@ -8,7 +8,7 @@
 # Author: Michal Blažek
 #
 
-PROJECT_NAME=PixelNetCanvas
+PROJECT_NAME=PixelBluetoothCanvas
 SOURCE_DIR=src/
 BUILD_DIR=build/
 PROJECT=$(SOURCE_DIR)$(PROJECT_NAME)

@@ -7,6 +7,7 @@
 #include <QMouseEvent>
 #include <QGraphicsSceneMouseEvent>
 #include <QColorDialog>
+#include <QPainter>
 
 Scene::Scene(QObject *parent)
     : QGraphicsScene{parent},
@@ -37,8 +38,13 @@ void Scene::clearScene()
 
 QImage Scene::getImage()
 {
-    //TODO
-    return QImage();
+    QImage image(DISPLAY_WIDTH * PIXEL_SIZE, DISPLAY_HEIGHT * PIXEL_SIZE, QImage::Format_ARGB32);
+    image.fill(Qt::transparent);
+
+    QPainter painter(&image);
+    this->render(&painter, image.rect(), QRectF(0, 0, DISPLAY_WIDTH * PIXEL_SIZE, DISPLAY_HEIGHT * PIXEL_SIZE));
+    QImage scaledImage = image.scaled(128, 128, Qt::KeepAspectRatio, Qt::FastTransformation); // Qt::SmoothTransformation
+    return scaledImage;
 }
 
 void Scene::mousePressEvent(QGraphicsSceneMouseEvent *event)

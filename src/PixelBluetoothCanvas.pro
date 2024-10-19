@@ -1,4 +1,4 @@
-QT       += core gui
+QT       += core gui bluetooth
 
 greaterThan(QT_MAJOR_VERSION, 5): QT += widgets
 
@@ -9,19 +9,21 @@ CONFIG += c++17
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-    ipselectwindow.cpp \
+    bluetoothdatasender.cpp \
+    bluetoothselectwindow.cpp \
     main.cpp \
     mainwindow.cpp \
     scene.cpp
 
 HEADERS += \
+    bluetoothdatasender.h \
+    bluetoothselectwindow.h \
     config.h \
-    ipselectwindow.h \
     mainwindow.h \
     scene.h
 
 FORMS += \
-    ipselectwindow.ui \
+    bluetoothselectwindow.ui \
     mainwindow.ui
 
 # Default rules for deployment.
