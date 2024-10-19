@@ -17,6 +17,7 @@ BluetoothSelectWindow::BluetoothSelectWindow(QWidget *parent)
     ui->ConnectButton->setStyleSheet("QPushButton { color: white; background-color: #2A2A2A; }"
                                      "QPushButton:hover { background-color: #4A4A4A; }"
                                      "QPushButton:pressed { background-color: #3A3A3A; }");
+    ui->BluetoothLineEdit->setStyleSheet("color: white;");
 
     connect(ui->ConnectButton, &QPushButton::clicked, this, &BluetoothSelectWindow::onConnectButtonClicked);
     connect(ui->BluetoothLineEdit, &QLineEdit::returnPressed, ui->ConnectButton, &QPushButton::click);

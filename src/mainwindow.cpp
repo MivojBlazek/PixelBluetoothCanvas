@@ -16,7 +16,6 @@ MainWindow::MainWindow(const QString &bluetoothAddress, QWidget *parent)
     ui->setupUi(this);
 
     setWindowTitle("PixelBluetoothCanvas");
-    setStyleSheet("background-color: #2A2A2A;");
 
     Scene *scene = initScene();
 
@@ -40,6 +39,18 @@ MainWindow::MainWindow(const QString &bluetoothAddress, QWidget *parent)
     connect(ui->SendImageButton, &QPushButton::clicked, this, &MainWindow::sendImage);
 
     bluetoothSender.connectToDevice(bluetoothAddress, QBluetoothUuid(QBluetoothUuid::ServiceClassUuid::SerialPort));
+
+    setStyleSheet("background-color: #2A2A2A;");
+    ui->SendTextButton->setStyleSheet("QPushButton { color: white; background-color: #2A2A2A; }"
+                                     "QPushButton:hover { background-color: #4A4A4A; }"
+                                     "QPushButton:pressed { background-color: #3A3A3A; }");
+    ui->SendImageButton->setStyleSheet("QPushButton { color: white; background-color: #2A2A2A; }"
+                                      "QPushButton:hover { background-color: #4A4A4A; }"
+                                      "QPushButton:pressed { background-color: #3A3A3A; }");
+    ui->ClearButton->setStyleSheet("QPushButton { color: white; background-color: #2A2A2A; }"
+                                       "QPushButton:hover { background-color: #4A4A4A; }"
+                                       "QPushButton:pressed { background-color: #3A3A3A; }");
+    ui->SendTextLineEdit->setStyleSheet("color: white;");
 }
 
 MainWindow::~MainWindow()
