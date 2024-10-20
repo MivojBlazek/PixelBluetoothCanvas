@@ -6,8 +6,8 @@
 **Activate virtual environment:**\
 `source venv/bin/activate`
 
-**Install flask in virtual environment:**\
-`pip install flask`
+**Install pybluez in virtual environment:**\
+`pip install pybluez`
 
 **Run server:**\
 `python server.py`
