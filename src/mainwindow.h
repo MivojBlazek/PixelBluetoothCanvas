@@ -4,6 +4,7 @@
 #include "scene.h"
 #include "bluetoothdatasender.h"
 #include <QMainWindow>
+#include <QProgressBar>
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -23,11 +24,20 @@ private:
     Ui::MainWindow *ui;
 
     QString bluetoothAddress;
+    BluetoothDataSender bluetoothSender;
+
+    QProgressBar *progressBar;
+    QByteArray imageData;
+    const int chunkSize = 2 * 128; // 1 line
+    int bytesSent;
+    QTimer *sendTimer;
+    bool firstChunk;
+
     Scene *initScene();
     void updateLabel();
     void sendText();
     void sendImage();
     QByteArray convertImageToRGB565(const QImage &image);
-    BluetoothDataSender bluetoothSender;
+    void sendNextChunk();
 };
 #endif // MAINWINDOW_H

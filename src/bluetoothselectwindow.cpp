@@ -10,9 +10,6 @@ BluetoothSelectWindow::BluetoothSelectWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
-    QBluetoothLocalDevice localDevice;
-    pairedDevices = localDevice.connectedDevices();
-
     setStyleSheet("background-color: #2A2A2A;");
     ui->ConnectButton->setStyleSheet("QPushButton { color: white; background-color: #2A2A2A; }"
                                      "QPushButton:hover { background-color: #4A4A4A; }"
@@ -21,7 +18,6 @@ BluetoothSelectWindow::BluetoothSelectWindow(QWidget *parent)
 
     connect(ui->ConnectButton, &QPushButton::clicked, this, &BluetoothSelectWindow::onConnectButtonClicked);
     connect(ui->BluetoothLineEdit, &QLineEdit::returnPressed, ui->ConnectButton, &QPushButton::click);
-    connect(ui->BluetoothLineEdit, &QLineEdit::textEdited, this, &BluetoothSelectWindow::clearErrorMessage);
 }
 
 BluetoothSelectWindow::~BluetoothSelectWindow()
@@ -31,22 +27,10 @@ BluetoothSelectWindow::~BluetoothSelectWindow()
 
 void BluetoothSelectWindow::onConnectButtonClicked()
 {
+    this->hide();
 
     QString bluetoothAddress = ui->BluetoothLineEdit->text();
-    for (QBluetoothAddress &deviceAddress : pairedDevices)
-    {
-        if (bluetoothAddress == deviceAddress.toString())
-        {
-            this->hide();
-            MainWindow *mainWindow = new MainWindow(bluetoothAddress);
-            mainWindow->show();
-            return;
-        }
-    }
-    ui->ErrorLabel->setText("Error: No device found.");
-}
+    MainWindow *mainWindow = new MainWindow(bluetoothAddress);
 
-void BluetoothSelectWindow::clearErrorMessage()
-{
-    ui->ErrorLabel->clear();
+    mainWindow->show();
 }

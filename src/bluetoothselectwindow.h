@@ -20,9 +20,7 @@ public:
 private:
     Ui::BluetoothSelectWindow *ui;
 
-    QList<QBluetoothAddress> pairedDevices;
     void onConnectButtonClicked();
-    void clearErrorMessage();
 };
 
 #endif // BLUETOOTHSELECTWINDOW_H
