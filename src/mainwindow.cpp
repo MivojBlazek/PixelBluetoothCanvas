@@ -27,6 +27,9 @@ MainWindow::MainWindow(const QString &bluetoothAddress, QWidget *parent)
     view->setScene(scene);
     view->setFocusPolicy(Qt::StrongFocus);
 
+    ui->LeftButton->setIcon(QIcon(":/icons/left_icon.png"));
+    ui->RightButton->setIcon(QIcon(":/icons/right_icon.png"));
+
     ui->ColorButton->setIcon(QIcon(":/icons/color_icon.png"));
     ui->ColorButton->setToolTip("Select color");
     ui->ColorLabel->setStyleSheet(QString("background-color: " + scene->getColor().name() + ";"));
@@ -35,6 +38,16 @@ MainWindow::MainWindow(const QString &bluetoothAddress, QWidget *parent)
 
     connect(ui->ColorButton, &QPushButton::clicked, scene, &Scene::changeColor);
     connect(ui->ClearButton, &QPushButton::clicked, scene, &Scene::clearScene);
+    connect(ui->LeftButton, &QPushButton::clicked, this, [this]() {
+        QByteArray data;
+        data.prepend(static_cast<char>(0x03));
+        bluetoothSender.sendData(data);
+    });
+    connect(ui->RightButton, &QPushButton::clicked, this, [this]() {
+        QByteArray data;
+        data.prepend(static_cast<char>(0x04));
+        bluetoothSender.sendData(data);
+    });
 
 
     connect(ui->SendTextButton, &QPushButton::clicked, this, &MainWindow::sendText);
@@ -57,8 +70,14 @@ MainWindow::MainWindow(const QString &bluetoothAddress, QWidget *parent)
                                       "QPushButton:hover { background-color: #4A4A4A; }"
                                       "QPushButton:pressed { background-color: #3A3A3A; }");
     ui->ClearButton->setStyleSheet("QPushButton { color: white; background-color: #2A2A2A; }"
-                                       "QPushButton:hover { background-color: #4A4A4A; }"
-                                       "QPushButton:pressed { background-color: #3A3A3A; }");
+                                   "QPushButton:hover { background-color: #4A4A4A; }"
+                                   "QPushButton:pressed { background-color: #3A3A3A; }");
+    ui->LeftButton->setStyleSheet("QPushButton { color: white; background-color: #2A2A2A; }"
+                                   "QPushButton:hover { background-color: #4A4A4A; }"
+                                   "QPushButton:pressed { background-color: #3A3A3A; }");
+    ui->RightButton->setStyleSheet("QPushButton { color: white; background-color: #2A2A2A; }"
+                                   "QPushButton:hover { background-color: #4A4A4A; }"
+                                   "QPushButton:pressed { background-color: #3A3A3A; }");
     ui->SendTextLineEdit->setStyleSheet("color: white;");
 }
 
@@ -109,6 +128,8 @@ void MainWindow::sendImage()
 
         ui->SendTextButton->setEnabled(false);
         ui->SendImageButton->setEnabled(false);
+        ui->LeftButton->setEnabled(false);
+        ui->RightButton->setEnabled(false);
 
         progressBar->setVisible(true);
         progressBar->setValue(0);
@@ -128,8 +149,8 @@ QByteArray MainWindow::convertImageToRGB565(const QImage &image)
         {
             QColor color = image.pixelColor(x, y);
             quint16 rgb565Pixel = ((color.red() >> 3) << 11) | ((color.green() >> 2) << 5) | (color.blue() >> 3);
-            byteArray.append(static_cast<char>(rgb565Pixel & 0xFF));
             byteArray.append(static_cast<char>((rgb565Pixel >> 8) & 0xFF));
+            byteArray.append(static_cast<char>(rgb565Pixel & 0xFF));
         }
     }
     return byteArray;
@@ -165,6 +186,8 @@ void MainWindow::sendNextChunk()
 
         ui->SendTextButton->setEnabled(true);
         ui->SendImageButton->setEnabled(true);
+        ui->LeftButton->setEnabled(true);
+        ui->RightButton->setEnabled(true);
 
         progressBar->setVisible(false);
     }
