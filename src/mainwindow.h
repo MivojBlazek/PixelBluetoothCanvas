@@ -1,6 +1,8 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+#include "config.h"
+
 #include "scene.h"
 #include "bluetoothdatasender.h"
 #include <QMainWindow>
@@ -28,7 +30,7 @@ private:
 
     QProgressBar *progressBar;
     QByteArray imageData;
-    const int chunkSize = 2 * 128; // 1 line
+    const int chunkSize = CHUNK_SIZE;
     int bytesSent;
     QTimer *sendTimer;
     bool firstChunk;
